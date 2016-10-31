@@ -15,7 +15,7 @@ main:
 	MOV R1, #100        @ define function argument 1
 	MOV R2, #20         @ define function argument 1
 	MOV R3, #3          @ define function argument 1
-	BL  _add            @ branch to hello procedure with return
+	BL  _sum            @ branch to hello procedure with return
 	MOV R1, R0          @ copy return value to R1
 	BL  _print_val      @ print value stored in R1
 	B   _exit           @ branch to exit procedure with no return
@@ -30,13 +30,12 @@ _exit:
 	MOV R7, #1          @ terminate syscall, 1
 	SWI 0               @ execute syscall
        
-_add:
+_sum:
 	MOV R0, R1          @ copy input register R1 to return register R0
 	ADD R0, R2          @ add input register R2 to return register R0
-	ADD R0, R3          @ add input register R3 to return register R0
 	MOV PC, LR          @ return
 
-_sub:
+_diff:
     MOV R0, R1
     SUB R0, R2
     MOV PC, LR
@@ -46,7 +45,7 @@ _mul:
     MUL R0, R2
     MOV PC, LR
 
--div
+_max:
     DIV R1, R2
     MOV PC, LR
    
