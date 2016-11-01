@@ -72,19 +72,15 @@ _mul:
 
 _left_is_bigger:
     MOV R4, LR
-    LDR R0, =val_str
-    BL printf
+    MOV R0, R1
     MOV PC, R4
 
 _right_is_bigger:
     MOV R4, LR
-    LDR R0, =val_str
-    MOV R1, R2
-    BL printf
+    MOV R0, R2
     MOV PC, R4
 
 _max:
-
     CMP R1, R2
     BGT _left_is_bigger
     BLT _right_is_bigger
