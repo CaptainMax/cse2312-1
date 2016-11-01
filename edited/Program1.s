@@ -120,6 +120,5 @@ add_str:        .ascii      "Adding numbers...\n"
 val_str         .ascii      "%d\n"
 result_str:     .asciz      "Sum = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
-num1:           .word       0
-num2:           .word       0
+num:            .word       0
 input           .ascii      "%d"
