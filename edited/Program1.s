@@ -31,7 +31,8 @@ _exit:
 	SWI 0                   @ execute syscall
 
 _invalid_char:
-    BL printf
+	LDR R0,=result_str      @ string at label hello_str:
+	BL printf               @ call printf, where R1 is the print argument
     MOV PC, R7
 
 _check_char:
@@ -93,11 +94,14 @@ _getchar:
     MOV PC, LR              @ return
 
 _getint:
-    LDR R0, =input
-    LDR R1, =num
-    BL scanf
-    LDR R4, [R1]            @ move the character to the return register
-    MOV PC, LR              @ return
+    PUSH {LR}               @ store LR since scanf call overwrites
+    SUB SP, SP, #4          @ make room on stack
+    LDR R0, =input          @ R0 contains address of format string
+    MOV R1, SP              @ move SP to R1 to store entry on stack
+    BL scanf                @ call scanf
+    LDR R0, [SP]            @ load value at SP into R0
+    ADD SP, SP, #4          @ restore the stack pointer
+    POP {PC}                @ return
    
 _print_val:
 	MOV R4, LR              @ store LR since printf call overwrites
@@ -121,5 +125,4 @@ add_str     :      .ascii      "Adding numbers...\n"
 val_str     :      .ascii      "%d\n"
 result_str  :      .asciz      "Sum = %d\n"
 exit_str    :      .ascii      "Terminating program.\n"
-num         :      .word       0
 input       :      .asciz      "%d"
