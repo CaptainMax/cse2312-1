@@ -81,7 +81,7 @@ _right_is_bigger:
     LDR R0, =val_str
     MOV R1, R2
     BL printf
-    MOV PC, Rn
+    MOV PC, R4
 
 _max:
 
