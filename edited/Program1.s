@@ -94,7 +94,7 @@ _getchar:
 
 _getint:
     LDR R0, input
-    MOV R1, num
+    LDR R1, num
     BL scanf
     LDR R4, [R1]            @ move the character to the return register
     MOV PC, LR              @ return
