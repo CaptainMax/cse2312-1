@@ -18,10 +18,15 @@ main:
     MOV R5, R0
     BL  _getint
     MOV R6, R0
+    BL _set_in
     BL  _check_char
 	MOV R1, R0              @ copy return value to R1
 	BL  _print_val          @ print value stored in R1
 	B   main                @ loop to main procedure with no return
+
+_set_in:
+    MOV R1, R4
+    MOV R2, R6
 
 _exit:  
 	MOV R7, #4              @ write syscall, 4
@@ -48,7 +53,6 @@ _check_char:
     CMP R5, #'M'
     BEQ _max
     BNE _invalid_char
-    MOV PC, LR
 
 _sum:
 	MOV R0, R1              @ copy input register R1 to return register R0
@@ -125,6 +129,6 @@ read_char   :      .ascii      " "
 prompt_str  :      .ascii      "Enter first operand: "
 add_str     :      .ascii      "Adding numbers...\n"
 val_str     :      .ascii      "%d\n"
-result_str  :      .asciz      "Sum = %d\n"
+result_str  :      .asciz      "%d\n"
 exit_str    :      .ascii      "Terminating program.\n"
 input       :      .asciz      "%d"
