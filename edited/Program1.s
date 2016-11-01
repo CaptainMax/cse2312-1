@@ -27,6 +27,7 @@ main:
 _set_in:
     MOV R1, R4
     MOV R2, R6
+    MOB PC, LR
 
 _exit:  
 	MOV R7, #4              @ write syscall, 4
@@ -83,7 +84,7 @@ _right_is_bigger:
     MOV PC, R4
 
 _max:
-    CMP R1, R8
+    CMP R1, R2
     BGT _left_is_bigger
     BLT _right_is_bigger
     BEQ _left_is_bigger
@@ -132,3 +133,21 @@ val_str     :      .ascii      "%d\n"
 result_str  :      .asciz      "%d\n"
 exit_str    :      .ascii      "Terminating program.\n"
 input       :      .asciz      "%d"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
