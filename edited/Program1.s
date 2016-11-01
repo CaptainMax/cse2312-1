@@ -13,9 +13,11 @@
    
 main:
     BL  _getint
+    MOV R4, R0
     BL  _getchar            @ branch to scanf procedure with return
-    MOV R6, R4
+    MOV R5, R0
     BL  _getint
+    MOV R6, R0
     BL  _check_char
 	MOV R1, R0              @ copy return value to R1
 	BL  _print_val          @ print value stored in R1
@@ -89,8 +91,8 @@ _getchar:
     MOV R2, #1              @ read a single character
     LDR R1, =read_char      @ store the character in data memory
     SWI 0                   @ execute the system call
-    LDR R5, [R1]            @ move the character to the return register
-    AND R5, #0xFF           @ mask out all but the lowest 8 bits
+    LDR R0, [R1]            @ move the character to the return register
+    AND R0, #0xFF           @ mask out all but the lowest 8 bits
     MOV PC, LR              @ return
 
 _getint:
