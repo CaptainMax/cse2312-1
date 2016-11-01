@@ -27,7 +27,7 @@ main:
 _set_in:
     MOV R1, R4
     MOV R2, R6
-    MOB PC, LR
+    MOV PC, LR
 
 _exit:  
 	MOV R7, #4              @ write syscall, 4
