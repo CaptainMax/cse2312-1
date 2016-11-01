@@ -122,4 +122,4 @@ val_str     :      .ascii      "%d\n"
 result_str  :      .asciz      "Sum = %d\n"
 exit_str    :      .ascii      "Terminating program.\n"
 num         :      .word       0
-input       :      .ascii      "%d"
+input       :      .asciz      "%d"
