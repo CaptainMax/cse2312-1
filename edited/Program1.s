@@ -115,10 +115,11 @@ _prompt:
     MOV PC, LR              @ return
    
 .data
-prompt_str      .ascii      "Enter first operand: "
-add_str:        .ascii      "Adding numbers...\n"
-val_str         .ascii      "%d\n"
-result_str:     .asciz      "Sum = %d\n"
-exit_str:       .ascii      "Terminating program.\n"
-num:            .word       0
-input           .ascii      "%d"
+read_char   :      .ascii      " "
+prompt_str  :      .ascii      "Enter first operand: "
+add_str     :      .ascii      "Adding numbers...\n"
+val_str     :      .ascii      "%d\n"
+result_str  :      .asciz      "Sum = %d\n"
+exit_str    :      .ascii      "Terminating program.\n"
+num         :      .word       0
+input       :      .ascii      "%d"
