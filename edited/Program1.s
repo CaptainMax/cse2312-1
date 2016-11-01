@@ -81,10 +81,10 @@ _right_is_bigger:
     LDR R0, =val_str
     MOV R1, R2
     BL printf
-    MOV PC, R4
+    MOV PC, Rn
 
 _max:
-    MOV
+
     CMP R1, R2
     BGT _left_is_bigger
     BLT _right_is_bigger
