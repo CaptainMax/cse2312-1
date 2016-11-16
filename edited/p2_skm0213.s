@@ -23,8 +23,8 @@ main:
 
 _gcd:
     PUSH {LR}               @ store the return address
-    CMP R1, #1              @ compare the input argument to 1
-    MOVEQ R0, R1            @ set return value to 1 if equal
+    CMP R1, #0              @ compare the input argument to 1
+    MOVEQ R0, #1            @ set return value to 1 if equal
     POPEQ {PC}              @ restore stack pointer and return if equal
 
     PUSH {R1}               @ backup input argument value
