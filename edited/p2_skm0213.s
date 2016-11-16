@@ -83,3 +83,4 @@ _prompt:
 .data
 result_str  :      .asciz      "The GCD of %d and %d is %d\n"
 input       :      .asciz      "%d"
+prompt_str  :      .asciz      "The GCD ofasd and %d is asd\n"
