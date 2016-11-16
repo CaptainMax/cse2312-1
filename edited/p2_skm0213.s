@@ -23,7 +23,7 @@ main:
 
 _gcd:
     PUSH {LR}               @ store the return address
-    CMP R1, #0              @ compare the input argument to 1
+    CMP R1, #1              @ compare the input argument to 1
     MOVEQ R0, R1            @ set return value to 1 if equal
     POPEQ {PC}              @ restore stack pointer and return if equal
 
@@ -36,7 +36,7 @@ _gcd:
     BL _gcd                 @ compute gcd with new args
     POP {R1}
     POP {R2}                @ restore input argument
-    POP  {PC}               @ restore the stack pointer and return
+    POP {PC}               @ restore the stack pointer and return
 _mod_unsigned:
     cmp R2, R1              @ check to see if R1 >= R2
     MOVHS R0, R1            @ swap R1 and R2 if R2 > R1
