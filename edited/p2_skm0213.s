@@ -19,7 +19,7 @@ main:
     PUSH {R1}               @ store value to stack
     PUSH {R2}               @ store value to stack
     BL _gcd
-    MOV R1, R0
+    MOV R3, R0
 	BL  _print_val          @ print value stored in R1
 	B   main                @ loop to main procedure with no return
 
