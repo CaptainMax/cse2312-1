@@ -18,6 +18,7 @@ main:
     MOV R2, R0              @ copy return value to R1
     PUSH {R1}               @ store value to stack
     PUSH {R2}               @ store value to stack
+    MOV R1, sp
     BL _gcd
     MOV R3, R0
     POP {R1}
