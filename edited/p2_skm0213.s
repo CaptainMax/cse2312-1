@@ -46,16 +46,16 @@ _mod_unsigned:
     MOVHS R2, R0            @ swap R1 and R2 if R2 > R1
     MOV R0, #0              @ initialize return value
     B _modloopcheck         @ check to see if
+    _modloop:
+        ADD R0, R0, #1          @ increment R0
+        SUB R1, R1, R2          @ subtract R2 from R1
 
-_modloop:
-    ADD R0, R0, #1          @ increment R0
-    SUB R1, R1, R2          @ subtract R2 from R1
-
-_modloopcheck:
-    CMP R1, R2              @ check for loop termination
-    BHS _modloop            @ continue loop if R1 >= R2
+    _modloopcheck:
+        CMP R1, R2              @ check for loop termination
+        BHS _modloop            @ continue loop if R1 >= R2
     MOV R0, R1              @ move remainder to R0
     MOV PC, LR              @ return
+
 
 _getint:
     PUSH {LR}               @ store LR since scanf call overwrites
