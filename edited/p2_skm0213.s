@@ -34,8 +34,8 @@ _gcd:
     MOV R2, R0
 
     BL _gcd                 @ compute gcd with new args
-    POP {R2}
-    POP {R1}                @ restore input argument
+    POP {R1}
+    POP {R2}                @ restore input argument
     POP  {PC}               @ restore the stack pointer and return
 _mod_unsigned:
     cmp R2, R1              @ check to see if R1 >= R2
