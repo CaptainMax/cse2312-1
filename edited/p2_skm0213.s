@@ -1,9 +1,9 @@
 /******************************************************************************
-* @file procedure_call_parameters.s
-* @brief procedure call and return example with passed parameters
 *
-* Simple example of executing a procedure call and returning upon completion.
-* The procedure call expects 3 input parameters, and returns a value.
+* @file procedure_call_parameters.s, factorial.s, mod.s
+* @brief Code source
+*
+* Recursive algorithm to find the gcd of two numbers
 *
 * @author Christopher D. McMurrough
 ******************************************************************************/
@@ -12,17 +12,17 @@
 .func main
    
 main:
-    BL  _getint
-    MOV R1, R0
-    BL  _getint
-    MOV R2, R0              @ copy return value to R1
-    PUSH {R1}
-    PUSH {R2}
-    BL _gcd
-    POP {R2}
-    POP {R1}
-    MOV R3, R0
-    BL  _print_val          @ print value stored in R1
+    BL  _getint             @ getting first number
+    MOV R1, R0              @ copy return value of getting first number to R1
+    BL  _getint             @ getting second number
+    MOV R2, R0              @ copy return value of getting second number to R2
+    PUSH {R1}               @ backup input argument value
+    PUSH {R2}               @ backup input argument value
+    BL _gcd                 @ going to gcd label
+    POP {R2}                @ restore input argument
+    POP {R1}                @ restore input argument
+    MOV R3, R0              @ copy return value of gcd to R2
+    BL  _print_val          @ print value stored in R1, R2, R3
     B   main                @ loop to main procedure with no return
 
 _gcd:
@@ -30,17 +30,16 @@ _gcd:
     CMP R2, #0              @ compare the input argument to 1
     MOVEQ R0, R1            @ set return value to 1 if equal
     POPEQ {PC}              @ restore stack pointer and return if equal
-
+                            @ recursive check condition
     PUSH {R1}               @ backup input argument value
     PUSH {R2}               @ backup input argument value
-    BL _mod_unsigned
-    MOV R1, R2
-    MOV R2, R0
-
+    BL _mod_unsigned        @ finding modulus
+    MOV R1, R2              @ setting n1 to n2
+    MOV R2, R0              @ setting n2 to n1%n2
     BL _gcd                 @ compute gcd with new args
-    POP {R2}
+    POP {R2}                @ restore input argument
     POP {R1}                @ restore input argument
-    POP {PC}               @ restore the stack pointer and return
+    POP {PC}                @ restore the stack pointer and return
 _mod_unsigned:
     cmp R2, R1              @ check to see if R1 >= R2
     MOVHS R0, R1            @ swap R1 and R2 if R2 > R1
@@ -78,16 +77,7 @@ _print_val:
 	BL printf               @ call printf, where R1 is the print argument
 	MOV LR, R4              @ restore LR from R4
 	MOV PC, LR              @ return
-
-_prompt:
-    MOV R7, #4              @ write syscall, 4
-    MOV R0, #1              @ output stream to monitor, 1
-    MOV R2, #23             @ print string length
-    LDR R1, =prompt_str     @ string at label prompt_str:
-    SWI 0                   @ execute syscall
-    MOV PC, LR              @ return
    
 .data
 result_str  :      .asciz      "The GCD of %d and %d is %d\n"
 input       :      .asciz      "%d"
-prompt_str  :      .asciz      "The GCD ofasd and %d is asd\n"
