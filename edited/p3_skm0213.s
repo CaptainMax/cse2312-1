@@ -54,7 +54,7 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
-MOV R1, R2
+MOV R1, R0
 MOV R2, #1000
 BL _mod_unsigned
     POP {R2}                @ restore element address
