@@ -37,8 +37,6 @@ _changeMin:
 
 _changeMinMax:
     CMP R1, R5
-    LDR R0, =minVal
-    BL printf
     BLT _changeMin
     CMP R1, R6
     BGT _changeMax
@@ -78,7 +76,8 @@ readloop:
     PUSH {R0}               @ backup register before printf
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
-    MOV R2, R1              @ move array value to R2 for printf
+    BL _changeMinMax
+MOV R2, R1              @ move array value to R2 for printf
     MOV R1, R0              @ move array index to R1 for printf
 
     BL  _printf             @ branch to print procedure with return
