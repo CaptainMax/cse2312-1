@@ -42,12 +42,11 @@ _scanf:
     POP {PC}                @ return
 _search:
     CMP R0, #10             @ check to see if we are done iterating
-    BEQ readdone            @ exit loop if done
+    BEQ _not_found          @ exit loop if done
     LDR R1, =a              @ get address of a
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
     LDR R1, [R2]            @ read the array at address
-    BL _changeMinMax
     PUSH {R0}               @ backup register before printf
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
@@ -56,24 +55,22 @@ _search:
     MOV R1, R0              @ move array index to R1
     CMP R7, R2
     BEQ _found
-    BNE _not_found
     POP {R2}                @ restore register
     POP {R1}                @ restore register
     POP {R0}                @ restore register
     ADD R0, R0, #1          @ increment index
-    B   readloop            @ branch to next loop iteration
-
+    B   search            @ branch to next loop iteration
 _found:
     PUSH {LR}               @ store the return address
     LDR R0, =found_str      @ R0 contains formatted string address
     BL printf               @ call printf
-    POP {PC}                @ restore the stack pointer and return
+    B start
 
 _not_found:
     PUSH {LR}               @ store the return address
     LDR R0, =notFound_str     @ R0 contains formatted string address
     BL printf               @ call printf
-    POP {PC}                @ restore the stack pointer and return
+    B start
 
 _setMinMax:
     MOV R5, #1000
