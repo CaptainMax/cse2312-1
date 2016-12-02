@@ -72,10 +72,10 @@ readloop:
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
     MOV R2, R1              @ move array value to R2 for printf
-    CMP R0, #0
-    BEQ _setMinMax
-    BL _changeMinMax
     MOV R1, R0              @ move array index to R1 for printf
+CMP R0, #0
+BEQ _setMinMax
+BL _changeMinMax
     BL  _printf             @ branch to print procedure with return
     POP {R2}                @ restore register
     POP {R1}                @ restore register
