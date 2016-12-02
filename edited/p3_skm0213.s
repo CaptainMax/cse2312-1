@@ -86,8 +86,9 @@ readdone:
 
 _minMax:
     PUSH {LR}
-    MOV R1, R5
+
     LDR R0, =minVal
+    MOV R1, R5
     BL _printf
     MOV R1, R6
     LDR R0, =minVal
@@ -95,7 +96,7 @@ _minMax:
     POP {PC}
 
 _exit:
-    
+    BL _minMax
     MOV R7, #4              @ write syscall, 4
     MOV R0, #1              @ output stream to monitor, 1
     MOV R2, #21             @ print string length
