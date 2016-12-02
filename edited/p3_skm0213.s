@@ -35,9 +35,9 @@ _changeMin:
 
 _changeMinMax:
     CMP R2, R5
-    BLT _changeMin
+    BGT _changeMin
     CMP R2, R6
-    BGT _changeMax
+    BLT _changeMax
     MOV PC, LR
 
 _arrayMake:
@@ -55,9 +55,7 @@ writeloop:
     BL _getrand             @ get a random number
 
     POP {R2}                @ restore element address
-CMP R0, #0
-BEQ _setMinMax
-BL _changeMinMax
+
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
     ADD R0, R0, #1          @ increment index
@@ -76,7 +74,9 @@ readloop:
     PUSH {R2}               @ backup register before printf
     MOV R2, R1              @ move array value to R2 for printf
     MOV R1, R0              @ move array index to R1 for printf
-
+CMP R1, #0
+BEQ _setMinMax
+BL _changeMinMax
     BL  _printf             @ branch to print procedure with return
     POP {R2}                @ restore register
     POP {R1}                @ restore register
