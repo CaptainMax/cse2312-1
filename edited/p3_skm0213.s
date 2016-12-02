@@ -59,8 +59,7 @@ readloop:
     B   readloop            @ branch to next loop iteration
 readdone:
 
-    POP {PC}
-    B _exit                 @ exit if done
+       B _exit                 @ exit if done
 
 
 _exit:
