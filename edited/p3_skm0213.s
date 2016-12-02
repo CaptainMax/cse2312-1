@@ -1,5 +1,8 @@
 /******************************************************************************
  * @file rand_array.s
+ \_num:
+ PUSH {LR}
+ LDR R1, =
  * @author Christopher D. McMurrough
  ******************************************************************************/
 
@@ -10,9 +13,7 @@ main:
     BL _seedrand            @ seed random number generator with current time
     BL _arrayMake
     BL _num
-_num:
-    PUSH {LR}
-    LDR R1, =
+
 
 
 _arrayMake:
