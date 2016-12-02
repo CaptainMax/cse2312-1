@@ -54,6 +54,7 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
+
     MOV R2, R0
     BL _printf
     POP {R2}                @ restore element address
@@ -122,6 +123,9 @@ _seedrand:
 _getrand:
     PUSH {LR}               @ backup return address
     BL rand                 @ get a random number
+    MOV R1, R2
+    MOV R2, #1000
+    BL _mod_unsigned
     POP {PC}                @ return
 
 .data
