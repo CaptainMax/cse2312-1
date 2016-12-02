@@ -102,7 +102,7 @@ _minMax:
     B start
 
 _arrayMake:
-    MOV R0, #0              @ initialzae index variable
+    MOV R0, #0              @ initialze index variable
 
 writeloop:
 
