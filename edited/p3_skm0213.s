@@ -82,7 +82,6 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
-
     B _exit                 @ exit if done
 
 _minMax:
@@ -96,7 +95,7 @@ _minMax:
     POP {PC}
 
 _exit:
-    BL _minMax
+    
     MOV R7, #4              @ write syscall, 4
     MOV R0, #1              @ output stream to monitor, 1
     MOV R2, #21             @ print string length
@@ -127,7 +126,7 @@ _getrand:
 .data
 
 .balign 4
-a:              .skip       400
+a:              .skip       100
 printf_str:     .asciz      "a[%d] = %d\n"
 prompt_str:     .asciz      "ENTER SEARCH VALUE: "
 minVal:         .asciz      "MINIMUM VALUE = %d"
