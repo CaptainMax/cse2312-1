@@ -8,9 +8,15 @@
 
 main:
     BL _seedrand            @ seed random number generator with current time
-    BL _start
+    BL _arrayMake
+    BL _num
+_num:
+    PUSH {LR}
+    LDR R1, =
 
-_start:
+
+_arrayMake:
+    PUSH {LR}
     MOV R0, #0              @ initialze index variable
 writeloop:
     CMP R0, #10             @ check to see if we are done iterating
@@ -47,8 +53,14 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
-    MOV PC, LR
+    LDR R0, =minVal
+    MOV R1,
+    BL _printVals
+    LDR R0, =maxVal
+    BL _printVals
+    POP {PC}
     B _exit                 @ exit if done
+_printVals
 
 _exit:
     MOV R7, #4              @ write syscall, 4
@@ -83,5 +95,8 @@ _getrand:
 .balign 4
 a:              .skip       400
 printf_str:     .asciz      "a[%d] = %d\n"
-debug_str:      .asciz      "R%-2d   0x%08X  %011d \n"
+
+prompt_str:     .asciz      "ENTER SEARCH VALUE: "
+minVal:         .asciz      "MINIMUM VALUE = "
+maxVal:         .asciz      "MAXIMUM VALUE = "
 exit_str:       .ascii      "Terminating program.\n"
