@@ -53,7 +53,9 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
-
+    CMP R1, #0
+    BEQ _setMinMax
+    BL _changeMinMax
     POP {R2}                @ restore element address
 
     STR R0, [R2]            @ write the address of a[i] to a[i]
@@ -74,9 +76,7 @@ readloop:
     PUSH {R2}               @ backup register before printf
     MOV R2, R1              @ move array value to R2 for printf
     MOV R1, R0              @ move array index to R1 for printf
-CMP R1, #0
-BEQ _setMinMax
-BL _changeMinMax
+
     BL  _printf             @ branch to print procedure with return
     POP {R2}                @ restore register
     POP {R1}                @ restore register
