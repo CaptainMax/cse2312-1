@@ -117,6 +117,8 @@ writeloop:
     MOV R1, R0
     MOV R2, #1000
     BL _mod_unsigned
+    MOV R1, R0
+    BL _changeMinMax
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -132,7 +134,7 @@ readloop:
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
     LDR R1, [R2]            @ read the array at address
-    BL _changeMinMax
+
     PUSH {R0}               @ backup register before printf
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
