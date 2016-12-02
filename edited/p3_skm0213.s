@@ -75,20 +75,19 @@ _setMinMax:
     MOV R6, #0
     MOV PC, LR
 
-_changeMax:
-MOV R6, R1
-MOV PC, LR
+_changeMax:
+    MOV R6, R1
+    MOV PC, LR
 
 _changeMin:
     MOV R5, R1
     MOV PC, LR
 
 _changeMinMax:
-
-    CMP R1, R6
-    BGT _changeMax
     CMP R1, R5
     BLT _changeMin
+    CMP R1, R6
+    BGT _changeMax
     MOV PC, LR
 
 _minMax:
@@ -101,7 +100,7 @@ _minMax:
     B start
 
 _arrayMake:
-    PUSH {LR}               @ store the return address
+    PUSH {LR}
     MOV R0, #0              @ initialze index variable
 
 writeloop:
@@ -118,8 +117,6 @@ writeloop:
     MOV R1, R0
     MOV R2, #1000
     BL _mod_unsigned
-    MOV R1, R0
-    BL _changeMinMax
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -135,7 +132,7 @@ readloop:
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
     LDR R1, [R2]            @ read the array at address
-
+    BL _changeMinMax
     PUSH {R0}               @ backup register before printf
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
