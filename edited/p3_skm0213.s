@@ -59,7 +59,7 @@ _search:
     POP {R1}                @ restore register
     POP {R0}                @ restore register
     ADD R0, R0, #1          @ increment index
-    B   search            @ branch to next loop iteration
+    B   _search             @ branch to next loop iteration
 _found:
     PUSH {LR}               @ store the return address
     LDR R0, =found_str      @ R0 contains formatted string address
