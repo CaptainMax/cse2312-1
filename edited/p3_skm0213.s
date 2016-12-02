@@ -64,12 +64,13 @@ _search:
     ADD R0, R0, #1          @ increment index
     B   _search             @ branch to next loop iteration
 _found:
-    LDR R0, =found_str      @ R0 contains formatted string address
+    LDR R0, =res_str      @ R0 contains formatted string address
     BL printf               @ call printf
     B start
 
 _not_found:
-    LDR R0, =notFound_str     @ R0 contains formatted string address
+    MOV R1, #-1
+    LDR R0, =res_str       @ R0 contains formatted string address
     BL printf               @ call printf
     B start
 
@@ -204,5 +205,4 @@ prompt_str:     .asciz      "ENTER SEARCH VALUE: "
 minVal:         .asciz      "MINIMUM VALUE = %d\n"
 maxVal:         .asciz      "MAXIMUM VALUE = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
-notFound_str:   .ascii      "-1\n"
-found_str:      .ascii      "%d\n"
+res_str:        .ascii      "%d\n"
