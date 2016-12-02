@@ -37,6 +37,8 @@ _changeMin:
 
 _changeMinMax:
     CMP R1, R5
+    LDR R0, =minVal
+    BL printf
     BLT _changeMin
     CMP R1, R6
     BGT _changeMax
