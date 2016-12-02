@@ -84,7 +84,7 @@ _changeMin:
     MOV PC, LR
 
 _changeMinMax:
-    
+
     CMP R1, R6
     BGT _changeMax
     CMP R1, R5
@@ -101,6 +101,7 @@ _minMax:
     B start
 
 _arrayMake:
+    PUSH {LR}               @ store the return address
     MOV R0, #0              @ initialze index variable
 
 writeloop:
