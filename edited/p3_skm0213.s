@@ -3,7 +3,12 @@
  \_num:
  PUSH {LR}
  LDR R1, =
- * @author Christopher D. McMurrough
+ LDR R0, =minVal
+ MOV R1,
+ BL _printVals
+ LDR R0, =maxVal
+ BL _printVals
+ _printValsD. McMurrough
  ******************************************************************************/
 
 .global main
@@ -12,7 +17,6 @@
 main:
     BL _seedrand            @ seed random number generator with current time
     BL _arrayMake
-    BL _num
 
 
 
@@ -54,14 +58,10 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
-    LDR R0, =minVal
-    MOV R1,
-    BL _printVals
-    LDR R0, =maxVal
-    BL _printVals
+
     POP {PC}
     B _exit                 @ exit if done
-_printVals
+
 
 _exit:
     MOV R7, #4              @ write syscall, 4
