@@ -1,17 +1,8 @@
-/******************************************************************************
- * @file rand_array.s
- \_num:
- PUSH {LR}
- LDR R1, =
- LDR R0, =minVal
- MOV R1,
- BL _printVals
- LDR R0, =maxVal
- BL _printVals
- CMP R0, #0
- BEQ _setMinMax
- _printValsD. McMurrough
- ******************************************************************************/
+/******************************************************************************************************
+ * @file p3_skm0213.s
+ * @author Satej Mhatre
+ * Code snippets are taken from: Christopher D. McMurrough from http://github.com/cmcmurrough/cse2312
+ ******************************************************************************************************/
 
 .global main
 .func main
@@ -177,20 +168,20 @@ _getrand:
     POP {PC}                @ return
 
 _mod_unsigned:
-    cmp R2, R1          @ check to see if R1 >= R2
-    MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
-    MOVHS R1, R2        @ swap R1 and R2 if R2 > R1
-    MOVHS R2, R0        @ swap R1 and R2 if R2 > R1
-    MOV R0, #0          @ initialize return value
-    B _modloopcheck     @ check to see if
+    cmp R2, R1              @ check to see if R1 >= R2
+    MOVHS R0, R1            @ swap R1 and R2 if R2 > R1
+    MOVHS R1, R2            @ swap R1 and R2 if R2 > R1
+    MOVHS R2, R0            @ swap R1 and R2 if R2 > R1
+    MOV R0, #0              @ initialize return value
+    B _modloopcheck         @ check to see if
     _modloop:
-    ADD R0, R0, #1      @ increment R0
-    SUB R1, R1, R2      @ subtract R2 from R1
+    ADD R0, R0, #1          @ increment R0
+    SUB R1, R1, R2          @ subtract R2 from R1
     _modloopcheck:
-    CMP R1, R2          @ check for loop termination
-    BHS _modloop        @ continue loop if R1 >= R2
-    MOV R0, R1          @ move remainder to R0
-    MOV PC, LR          @ return
+    CMP R1, R2              @ check for loop termination
+    BHS _modloop            @ continue loop if R1 >= R2
+    MOV R0, R1              @ move remainder to R0
+    MOV PC, LR              @ return
 
 .data
 
