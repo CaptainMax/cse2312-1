@@ -86,12 +86,11 @@ readdone:
 
 _minMax:
     PUSH {LR}
-
     LDR R0, =minVal
     MOV R1, R5
     BL printf
     MOV R1, R6
-    LDR R0, =minVal
+    LDR R0, =maxVal
     BL printf
     POP {PC}
 
