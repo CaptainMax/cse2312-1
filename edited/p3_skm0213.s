@@ -22,7 +22,8 @@ main:
     BL _arrayMake
 
 _setMinMax:
-MOV R5, #999
+MOV R5, #1000
+SUB R5, #1
 MOV R6, #0
     MOV PC, LR
 
@@ -55,11 +56,9 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
-MOV R1, R0
-MOV R2, #1000
-BL _mod_unsigned
-
-
+    MOV R1, R0
+    MOV R2, #1000
+    BL _mod_unsigned
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
