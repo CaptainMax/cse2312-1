@@ -34,9 +34,9 @@ _changeMin:
     MOV PC, LR
 
 _changeMinMax:
-    CMP R2, R5
+    CMP R0, R5
     BLT _changeMin
-    CMP R2, R6
+    CMP R0, R6
     BGT _changeMax
     MOV PC, LR
 
