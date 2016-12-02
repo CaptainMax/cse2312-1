@@ -26,11 +26,14 @@ start:
     MOV R7, R0
     BL _init_search
     B start
+
+@All Search Functions
 _prompt:
     PUSH {LR}               @ store the return address
     LDR R0, =prompt_str     @ R0 contains formatted string address
     BL printf               @ call printf
     POP {PC}                @ restore the stack pointer and return
+
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
@@ -63,17 +66,19 @@ _search:
     POP {R0}                @ restore register
     ADD R0, R0, #1          @ increment index
     B   _search             @ branch to next loop iteration
+
 _found:
-    LDR R0, =res_str      @ R0 contains formatted string address
+    LDR R0, =res_str        @ R0 contains formatted string address
     BL printf               @ call printf
     B start
 
 _not_found:
     MOV R1, #-1
-    LDR R0, =res_str       @ R0 contains formatted string address
+    LDR R0, =res_str        @ R0 contains formatted string address
     BL printf               @ call printf
     B start
 
+@All Array init functions
 _setMinMax:
     MOV R5, #1000
     MOV R6, #0
@@ -94,9 +99,19 @@ _changeMinMax:
     BGT _changeMax
     MOV PC, LR
 
+_minMax:
+    LDR R0, =minVal
+    MOV R1, R5
+    BL printf
+    MOV R1, R6
+    LDR R0, =maxVal
+    BL printf
+    B start
+
 _arrayMake:
     PUSH {LR}
     MOV R0, #0              @ initialze index variable
+
 writeloop:
 
     CMP R0, #10             @ check to see if we are done iterating
@@ -116,6 +131,7 @@ writeloop:
     POP {R0}                @ restore iterator
     ADD R0, R0, #1          @ increment index
     B   writeloop           @ branch to next loop iteration
+
 writedone:
     MOV R0, #0              @ initialze index variable
 readloop:
@@ -139,26 +155,7 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
-    BL _minMax
-
-_minMax:
-    PUSH {LR}
-    LDR R0, =minVal
-    MOV R1, R5
-    BL printf
-    MOV R1, R6
-    LDR R0, =maxVal
-    BL printf
-    POP {PC}
-
-_exit:
-    MOV R7, #4              @ write syscall, 4
-    MOV R0, #1              @ output stream to monitor, 1
-    MOV R2, #21             @ print string length
-    LDR R1, =exit_str       @ string at label exit_str:
-    SWI 0                   @ execute syscall
-    MOV R7, #1              @ terminate syscall, 1
-    SWI 0                   @ execute syscall
+    B  _minMax
 
 _printf:
     PUSH {LR}               @ store the return address
@@ -187,11 +184,11 @@ _mod_unsigned:
     MOV R0, #0          @ initialize return value
     B _modloopcheck     @ check to see if
     _modloop:
-    ADD R0, R0, #1  @ increment R0
-    SUB R1, R1, R2  @ subtract R2 from R1
+    ADD R0, R0, #1      @ increment R0
+    SUB R1, R1, R2      @ subtract R2 from R1
     _modloopcheck:
-    CMP R1, R2      @ check for loop termination
-    BHS _modloop    @ continue loop if R1 >= R2
+    CMP R1, R2          @ check for loop termination
+    BHS _modloop        @ continue loop if R1 >= R2
     MOV R0, R1          @ move remainder to R0
     MOV PC, LR          @ return
 
