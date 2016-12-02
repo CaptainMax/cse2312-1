@@ -55,7 +55,7 @@ writeloop:
     BL _getrand             @ get a random number
     CMP R0, #0
     BEQ _setMinMax
-    BL _setMinMax
+    BL _changeMinMax
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
