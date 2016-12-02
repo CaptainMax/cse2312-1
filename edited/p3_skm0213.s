@@ -35,9 +35,9 @@ _changeMin:
 
 _changeMinMax:
     CMP R2, R5
-    BGT _changeMin
+    BLT _changeMin
     CMP R2, R6
-    BLT _changeMax
+    BGT _changeMax
     MOV PC, LR
 
 _arrayMake:
