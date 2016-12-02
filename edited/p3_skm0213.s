@@ -89,10 +89,10 @@ _minMax:
 
     LDR R0, =minVal
     MOV R1, R5
-    BL _printf
+    BL printf
     MOV R1, R6
     LDR R0, =minVal
-    BL _printf
+    BL printf
     POP {PC}
 
 _exit:
