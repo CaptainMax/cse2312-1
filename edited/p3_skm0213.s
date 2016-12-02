@@ -15,15 +15,36 @@
 .func main
 
 main:
+    MOV R5, #0
+    MOV R6, #
     BL _seedrand            @ seed random number generator with current time
     BL _arrayMake
 
+_setMinMax:
+    MOV R5, R2
+    MOV R6, R2
+    MOV PC, LR
 
+_changeMin:
+    MOV R6, R2
+    MOV PC, LR
+
+_changeMin:
+    MOV R5, R2
+    MOV PC, LR
+
+_changeMinMax:
+    CMP R2, R5
+    BLT _changeMin
+    CMP R2, R6
+    BGT _changeMax
+    MOV PC, LR
 
 _arrayMake:
     PUSH {LR}
     MOV R0, #0              @ initialze index variable
 writeloop:
+
     CMP R0, #10             @ check to see if we are done iterating
     BEQ writedone           @ exit loop if done
     LDR R1, =a              @ get address of a
@@ -32,6 +53,9 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
+    CMP R0, #0
+    BEQ _setMax
+    BL _setMinMax
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -58,9 +82,18 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
+    BL _minMax
+    B _exit                 @ exit if done
 
-       B _exit                 @ exit if done
-
+_minMax:
+    PUSH {LR}
+    MOV R1, R5
+    LDR R0, =minVal
+    BL _printf
+    MOV R1, R6
+    LDR R0, =minVal
+    BL _printf
+    POP {PC}
 
 _exit:
     MOV R7, #4              @ write syscall, 4
@@ -95,8 +128,7 @@ _getrand:
 .balign 4
 a:              .skip       400
 printf_str:     .asciz      "a[%d] = %d\n"
-
 prompt_str:     .asciz      "ENTER SEARCH VALUE: "
-minVal:         .asciz      "MINIMUM VALUE = "
-maxVal:         .asciz      "MAXIMUM VALUE = "
+minVal:         .asciz      "MINIMUM VALUE = %d"
+maxVal:         .asciz      "MAXIMUM VALUE = %d"
 exit_str:       .ascii      "Terminating program.\n"
