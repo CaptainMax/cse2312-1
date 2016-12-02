@@ -75,9 +75,9 @@ _setMinMax:
     MOV R6, #0
     MOV PC, LR
 
-_changeMax:
-    MOV R6, R1
-    MOV PC, LR
+_changeMax:
+MOV R6, R1
+MOV PC, LR
 
 _changeMin:
     MOV R5, R1
