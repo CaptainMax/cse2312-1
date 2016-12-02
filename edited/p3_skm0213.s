@@ -8,6 +8,9 @@
  BL _printVals
  LDR R0, =maxVal
  BL _printVals
+ CMP R0, #0
+ BEQ _setMinMax
+ BL _changeMinMax
  _printValsD. McMurrough
  ******************************************************************************/
 
@@ -52,6 +55,7 @@ writeloop:
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
 
+
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -71,9 +75,7 @@ readloop:
     PUSH {R2}               @ backup register before printf
     MOV R2, R1              @ move array value to R2 for printf
     MOV R1, R0              @ move array index to R1 for printf
-CMP R0, #0
-BEQ _setMinMax
-BL _changeMinMax
+
     BL  _printf             @ branch to print procedure with return
     POP {R2}                @ restore register
     POP {R1}                @ restore register
@@ -121,6 +123,22 @@ _getrand:
     PUSH {LR}               @ backup return address
     BL rand                 @ get a random number
     POP {PC}                @ return
+
+_mod_unsigned:
+    cmp R2, R1          @ check to see if R1 >= R2
+    MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
+    MOVHS R1, R2        @ swap R1 and R2 if R2 > R1
+    MOVHS R2, R0        @ swap R1 and R2 if R2 > R1
+    MOV R0, #0          @ initialize return value
+    B _modloopcheck     @ check to see if
+    _modloop:
+    ADD R0, R0, #1  @ increment R0
+    SUB R1, R1, R2  @ subtract R2 from R1
+    _modloopcheck:
+    CMP R1, R2      @ check for loop termination
+    BHS _modloop    @ continue loop if R1 >= R2
+    MOV R0, R1          @ move remainder to R0
+    MOV PC, LR          @ return
 
 .data
 
