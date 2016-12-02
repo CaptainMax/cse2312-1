@@ -76,7 +76,7 @@ _setMinMax:
     MOV PC, LR
 
 _changeMax:
-    MOV R6, R1
+    MOV R6, R1
     MOV PC, LR
 
 _changeMin:
@@ -84,11 +84,12 @@ _changeMin:
     MOV PC, LR
 
 _changeMinMax:
+    PUSH {R1}
     CMP R1, R6
     BGT _changeMax
+    POP {R1}
     CMP R1, R5
     BLT _changeMin
-
     MOV PC, LR
 
 _minMax:
