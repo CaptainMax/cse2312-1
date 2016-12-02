@@ -59,7 +59,7 @@ MOV R1, R0
 MOV R2, #1000
 BL _mod_unsigned
 
-BL _changeMinMax
+
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
