@@ -130,6 +130,6 @@ _getrand:
 a:              .skip       100
 printf_str:     .asciz      "a[%d] = %d\n"
 prompt_str:     .asciz      "ENTER SEARCH VALUE: "
-minVal:         .asciz      "MINIMUM VALUE = %d"
-maxVal:         .asciz      "MAXIMUM VALUE = %d"
+minVal:         .ascii      "MINIMUM VALUE = %d"
+maxVal:         .ascii      "MAXIMUM VALUE = %d"
 exit_str:       .ascii      "Terminating program.\n"
