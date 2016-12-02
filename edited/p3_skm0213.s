@@ -17,7 +17,7 @@
 main:
     MOV R5, #0
     MOV R6, #0
-    BL _seedrand            @ seed random number generator with current time
+    BL _seedrand
     BL _arrayMake
 
 _setMinMax:
@@ -34,9 +34,9 @@ _changeMin:
     MOV PC, LR
 
 _changeMinMax:
-    CMP R0, R5
+    CMP R2, R5
     BLT _changeMin
-    CMP R0, R6
+    CMP R2, R6
     BGT _changeMax
     MOV PC, LR
 
@@ -53,9 +53,7 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
-    CMP R0, #0
-    BEQ _setMinMax
-    BL _changeMinMax
+
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -74,6 +72,9 @@ readloop:
     PUSH {R1}               @ backup register before printf
     PUSH {R2}               @ backup register before printf
     MOV R2, R1              @ move array value to R2 for printf
+    CMP R0, #0
+    BEQ _setMinMax
+    BL _changeMinMax
     MOV R1, R0              @ move array index to R1 for printf
     BL  _printf             @ branch to print procedure with return
     POP {R2}                @ restore register
