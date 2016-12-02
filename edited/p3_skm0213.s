@@ -106,8 +106,7 @@ _exit:
 
 _printf:
     PUSH {LR}               @ store the return address
-    MOV R1, R5
-    LDR R0, =minVal     @ R0 contains formatted string address
+    LDR R0, =printf_str     @ R0 contains formatted string address
     BL printf               @ call printf
     POP {PC}                @ restore the stack pointer and return
 
