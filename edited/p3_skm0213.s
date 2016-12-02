@@ -8,9 +8,7 @@
  BL _printVals
  LDR R0, =maxVal
  BL _printVals
- CMP R0, #0
- BEQ _setMinMax
- BL _changeMinMax
+
  _printValsD. McMurrough
  ******************************************************************************/
 
@@ -27,11 +25,11 @@ _setMinMax:
     MOV PC, LR
 
 _changeMax:
-    MOV R6, R2
+    MOV R6, R1
     MOV PC, LR
 
 _changeMin:
-    MOV R5, R2
+    MOV R5, R1
     MOV PC, LR
 
 _changeMinMax:
@@ -51,12 +49,16 @@ writeloop:
     LDR R1, =a              @ get address of a
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
+CMP R0, #0
+BEQ _setMinMax
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
 MOV R1, R0
 MOV R2, #1000
 BL _mod_unsigned
+
+BL _changeMinMax
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
