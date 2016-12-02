@@ -16,7 +16,7 @@
 
 main:
     MOV R5, #0
-    MOV R6, #
+    MOV R6, #0
     BL _seedrand            @ seed random number generator with current time
     BL _arrayMake
 
@@ -25,7 +25,7 @@ _setMinMax:
     MOV R6, R2
     MOV PC, LR
 
-_changeMin:
+_changeMax:
     MOV R6, R2
     MOV PC, LR
 
