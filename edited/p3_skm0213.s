@@ -82,6 +82,7 @@ readloop:
     ADD R0, R0, #1          @ increment index
     B   readloop            @ branch to next loop iteration
 readdone:
+    BL _minMax
     B _exit                 @ exit if done
 
 _minMax:
@@ -95,7 +96,6 @@ _minMax:
     POP {PC}
 
 _exit:
-    BL _minMax
     MOV R7, #4              @ write syscall, 4
     MOV R0, #1              @ output stream to monitor, 1
     MOV R2, #21             @ print string length
