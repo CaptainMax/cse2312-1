@@ -87,8 +87,10 @@ _changeMinMax:
     PUSH {R1}
     CMP R1, R5
     BLT _changeMin
+
     POP {R1}
-    CMP R1, R6
+    MOV R2, R1
+    CMP R2, R6
     BGT _changeMax
     MOV PC, LR
 
