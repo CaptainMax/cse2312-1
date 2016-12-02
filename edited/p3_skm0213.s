@@ -77,20 +77,20 @@ _setMinMax:
 
 _changeMax:
     MOV R6, R1
+
     MOV PC, LR
 
 _changeMin:
     MOV R5, R1
+    MOV R0, R1
     MOV PC, LR
 
 _changeMinMax:
-    PUSH {R1}
+
     CMP R1, R5
     BLT _changeMin
-
-    POP {R1}
-    MOV R2, R1
-    CMP R2, R6
+    MOV R1, R0
+    CMP R1, R6
     BGT _changeMax
     MOV PC, LR
 
