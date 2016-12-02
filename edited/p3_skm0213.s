@@ -57,8 +57,6 @@ writeloop:
 MOV R1, R2
 MOV R2, #1000
 BL _mod_unsigned
-    MOV R2, R0
-    BL _printf
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
     POP {R0}                @ restore iterator
@@ -125,8 +123,8 @@ _seedrand:
 _getrand:
     PUSH {LR}               @ backup return address
     BL rand                 @ get a random number
-
     POP {PC}                @ return
+
 _mod_unsigned:
     cmp R2, R1          @ check to see if R1 >= R2
     MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
