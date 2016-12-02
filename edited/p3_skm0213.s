@@ -24,7 +24,7 @@ start:
     BL _prompt
     BL _scanf
     MOV R7, R0
-    BL _search
+    BL _init_search
     B start
 _prompt:
     PUSH {LR}               @ store the return address
@@ -40,6 +40,9 @@ _scanf:
     LDR R0, [SP]            @ load value at SP into R0
     ADD SP, SP, #4          @ restore the stack pointer
     POP {PC}                @ return
+
+_init_search:
+    MOV R0, #0              @ initialze index variable
 _search:
     CMP R0, #10             @ check to see if we are done iterating
     BEQ _not_found          @ exit loop if done
@@ -61,13 +64,11 @@ _search:
     ADD R0, R0, #1          @ increment index
     B   _search             @ branch to next loop iteration
 _found:
-    PUSH {LR}               @ store the return address
     LDR R0, =found_str      @ R0 contains formatted string address
     BL printf               @ call printf
     B start
 
 _not_found:
-    PUSH {LR}               @ store the return address
     LDR R0, =notFound_str     @ R0 contains formatted string address
     BL printf               @ call printf
     B start
