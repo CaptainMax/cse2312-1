@@ -54,7 +54,7 @@ writeloop:
     PUSH {R0}               @ backup iterator before procedure call
     PUSH {R2}               @ backup element address before procedure call
     BL _getrand             @ get a random number
-
+    
 
     POP {R2}                @ restore element address
     STR R0, [R2]            @ write the address of a[i] to a[i]
