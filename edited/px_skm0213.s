@@ -10,17 +10,19 @@
 main:
     BL  _getint
     MOV R4, R0
+    MOV R1, R4
+    BL _printf
     BL  _getchar            @ branch to scanf procedure with return
     MOV R5, R0
     BL _check_char
 
 
 _printf:
-    MOV R4, LR              @ store LR since printf call overwrites
+    PUSH {LR}
     LDR R0, =printf_str     @ R0 contains formatted string address
     MOV R1, R1              @ R1 contains printf argument (redundant line)
     BL printf               @ call printf
-    MOV PC, R4              @ return
+    POP {PC}
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
@@ -66,7 +68,11 @@ _invalid_char:
 
 _abs:
     PUSH {LR}
-
+    VMOV S0, R1             @ move the numerator to floating point register
+    VCVT.F32.S32 S0, S0     @ convert unsigned bit representation to single float
+    VABS.F32 S2, S0        @ compute S2 = |S0|
+    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
+    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
     POP {PC}
 
