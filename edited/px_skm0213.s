@@ -93,7 +93,7 @@ _find_pow:
     MOV PC, LR
 _pow:
     PUSH {LR}
-    BL  _getint
+    BL  _getFloat
     MOV R6, R0
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R1             @ move the numerator to floating point register
