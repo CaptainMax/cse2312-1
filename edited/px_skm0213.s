@@ -9,13 +9,11 @@
 
 main:
     BL  _getFloat
-
-    VMOV S0, R0             @ move return value R0 to FPU register S0
-    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
-    BL _printf
+    MOV R4, R0
     BL  _getchar            @ branch to scanf procedure with return
     MOV R5, R0
+    MOV R1, R4
+    MOV R2, R5
     BL _check_char
 
 
@@ -71,8 +69,8 @@ _invalid_char:
 _abs:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
-    VCVT.F32.S32 S0, S0     @ convert unsigned bit representation to single float
-    VABS.F32 S2, S0        @ compute S2 = |S0|
+    VCVT.F32.S32 S0, S0     @ convert signed bit representation to single float
+    VABS.F32 S2, S0         @ compute S2 = |S0|
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
@@ -117,7 +115,7 @@ _inverse:
     MOV PC, LR
 _check_char:
     PUSH {LR}
-    MOV R1, R4
+    MOV R1, R1
     CMP R5, #'a'
     BEQ _abs
     CMP R5, #'s'
