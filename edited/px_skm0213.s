@@ -31,7 +31,7 @@ _printf_result:
 _getint:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
-    LDR R0, =input          @ R0 contains address of format string
+    LDR R0, =format_str     @ R0 contains address of format string
     MOV R1, SP              @ move SP to R1 to store entry on stack
     BL scanf                @ call scanf
     LDR R0, [SP]            @ load value at SP into R0
@@ -106,7 +106,8 @@ _pow_finish:
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
     POP {PC}
-
+_inverse:
+    MOV PC, LR
 _check_char:
     PUSH {LR}
     MOV R1, R4
