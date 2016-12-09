@@ -128,7 +128,7 @@ _check_char:
 
 .data
 read_char:      .ascii      " "
-result_str:     .asciz      "Pi is approximately 22/7 = %f\n"
+result_str:     .asciz      "%f\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
 printf_str:     .ascii      "%f\n"
