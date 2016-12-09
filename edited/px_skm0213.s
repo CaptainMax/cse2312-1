@@ -8,9 +8,11 @@
 .func main
 
 main:
-    BL  _getint
-    MOV R4, R0
-    MOV R1, R4
+    BL  _getFloat
+
+    VMOV S0, R0             @ move return value R0 to FPU register S0
+    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     BL _printf
     BL  _getchar            @ branch to scanf procedure with return
     MOV R5, R0
@@ -30,7 +32,7 @@ _printf_result:
     BL printf               @ call printf
     POP {PC}                @ pop LR from stack and return
 
-_getint:
+_getFloat:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
     LDR R0, =format_str     @ R0 contains address of format string
