@@ -65,6 +65,7 @@ _invalid_char:
     MOV PC, R7
 
 _abs:
+    PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
     VCVT.F32.S32 S0, S0     @ convert unsigned bit representation to single float
     VABS.F32 S2, S0         @ compute S2 = |S0|
@@ -74,6 +75,7 @@ _abs:
     POP {PC}
 
 _square_root:
+    PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
@@ -86,6 +88,7 @@ _find_pow:
     VMUL.F32 S4, S1, S2
     MOV PC, LR
 _pow:
+    PUSH {LR}
     BL  _getint
     MOV R6, R0
     VMOV S1, R6             @ move the numerator to floating point register
@@ -120,6 +123,7 @@ _check_char:
     CMP R5, #'i'
     BEQ _inverse
     BNE _invalid_char
+    POP {PC}
 
 
 .data
