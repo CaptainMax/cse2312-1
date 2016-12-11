@@ -97,6 +97,7 @@ _square_root:
 
 _find_pow:
     VMUL.F32 S4, S1, S1
+    ADD R2, R2, #1
     MOV PC, LR
 _pow:
     PUSH {LR}
