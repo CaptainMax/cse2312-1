@@ -7,15 +7,7 @@
 .global main
 .func main
 
-main:
-    BL  _getFloat
-    MOV R4, R0
-    BL  _getchar            @ branch to scanf procedure with return
-    MOV R5, R0
-    MOV R1, R4
-    MOV R2, R5
-    BL _check_char
-    B main
+
 _printf_result:
     PUSH {LR}               @ push LR to stack
     LDR R0, =result_str     @ R0 contains formatted string address
@@ -140,7 +132,15 @@ _check_char:
     BEQ _inverse
     BNE _invalid_char
     POP {PC}
-
+main:
+    BL  _getFloat
+    MOV R4, R0
+    BL  _getchar            @ branch to scanf procedure with return
+    MOV R5, R0
+    MOV R1, R4
+    MOV R2, R5
+    BL _check_char
+    B main
 
 .data
 read_char:      .ascii      " "
