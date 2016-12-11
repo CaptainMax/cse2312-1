@@ -15,7 +15,7 @@ main:
     MOV R1, R4
     MOV R2, R5
     BL _check_char
-
+    B main
 
 _printf:
     PUSH {LR}
@@ -67,6 +67,16 @@ _invalid_char:
     BL printf               @ call printf, where R1 is the print argument
     POP {PC}
 
+_getint:
+    PUSH {LR}               @ store LR since scanf call overwrites
+    SUB SP, SP, #4          @ make room on stack
+    LDR R0, =formatint_str  @ R0 contains address of format string
+    MOV R1, SP              @ move SP to R1 to store entry on stack
+    BL scanf                @ call scanf
+    LDR R0, [SP]            @ load value at SP into R0
+    ADD SP, SP, #4          @ restore the stack pointer
+    POP {PC}                @ return
+
 _abs:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
@@ -91,9 +101,8 @@ _find_pow:
 _pow:
     PUSH {LR}
     BL  _getInt
-    MOV R6, R0
-    VMOV S1, R6             @ move the numerator to floating point register
-    VMOV S2, R1             @ move the numerator to floating point register
+    VMOV S1, R0             @ move the numerator to floating point register
+    VMOV S2, R6             @ move the numerator to floating point register
 
     PUSH {R1}
 _pow_start:
