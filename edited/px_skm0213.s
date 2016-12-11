@@ -70,7 +70,6 @@ _invalid_char:
 _abs:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
-@    VCVT.F32.S32 S1, S0     @ convert signed bit representation to single float
     VABS.F32 S2, S0         @ compute S2 = |S0|
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
@@ -80,7 +79,7 @@ _abs:
 _square_root:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
-    VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
+
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
@@ -96,8 +95,7 @@ _pow:
     MOV R6, R0
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R1             @ move the numerator to floating point register
-    VCVT.F32.U32 S1, S1     @ convert unsigned bit representation to single float
-    VCVT.F32.U32 S2, S2     @ convert unsigned bit representation to single float
+
     PUSH {R1}
 _pow_start:
     VMOV S4, S1
@@ -118,15 +116,13 @@ _inverse:
     MOV R1, #1
     VMOV S0, R0             @ move the numerator to floating point register
     VMOV S1, R1             @ move the denominator to floating point register
-    VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
-    VCVT.F32.U32 S1, S1     @ convert unsigned bit representation to single float
 
     VDIV.F32 S2, S0, S1     @ compute S2 = S0 * S1
 
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    POP {LR}
+    POP {PC}
 _check_char:
     PUSH {LR}
     MOV R1, R1
