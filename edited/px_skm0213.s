@@ -112,7 +112,7 @@ _pow:
     MOV R5, #1
     VMOV S4, R5
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
-    VMOV.F32 S4, #1
+    VMOV.F32 S4, #1.0
     SUB R1, R1, #1
     PUSH {R1}
 _pow_start:
