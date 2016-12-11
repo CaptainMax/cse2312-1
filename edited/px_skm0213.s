@@ -7,6 +7,18 @@
 .global main
 .func main
 
+main:
+    BL  _getFloat
+    MOV R4, R0
+    BL  _getchar            @ branch to scanf procedure with return
+    MOV R5, R0
+    MOV R1, R4
+    MOV R2, R5
+    BL _check_char
+    VCVT.F64.F32 D4, S0     @ covert the result to double precision for printing
+    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
+    BL  _printf_result      @ print the result
+    B main
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
@@ -115,9 +127,7 @@ _inverse:
     VMOV S1, R1             @ move the denominator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
     VDIV.F32 S2, S0, S1     @ compute S2 = S0 / S1
-    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
+    VMOV S0, S2
     POP {PC}
 
 _check_char:
@@ -132,15 +142,7 @@ _check_char:
     BEQ _inverse
     BNE _invalid_char
     POP {PC}
-main:
-    BL  _getFloat
-    MOV R4, R0
-    BL  _getchar            @ branch to scanf procedure with return
-    MOV R5, R0
-    MOV R1, R4
-    MOV R2, R5
-    BL _check_char
-    B main
+
 
 .data
 read_char:      .ascii      " "
