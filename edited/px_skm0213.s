@@ -83,7 +83,7 @@ _find_pow:
     ADD R1, R1, #1
     PUSH {R1}
     LDR R0, =formatint_str
-    BL _printf
+    BL printf
     POP {R1}
     B _pow_start
 _pow:
