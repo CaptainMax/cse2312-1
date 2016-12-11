@@ -94,20 +94,6 @@ _square_root:
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
     POP {PC}
-float power(float num, int n){
-    float pow = 1;
-    int i = 1;
-    while (i<=n){
-        pow = pow * num;
-        ++i;
-    }
-    return pow;
-}
-int main(){
-    printf("%f\n", power(2,5));
-    return 0;
-    
-}
 _find_pow:
     PUSH {LR}
     VMUL.F32 S4, S1, S1
@@ -126,7 +112,7 @@ _pow:
     MOV R5, #1
     VMOV S4, R5
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
-    VMOV S4, #1
+    VMOV.F32 S4, #1
     SUB R1, R1, #1
     PUSH {R1}
 _pow_start:
