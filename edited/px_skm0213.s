@@ -105,10 +105,11 @@ _pow:
     BL  _getInt
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R0             @ move the numerator to floating point register
-    MOV R5, #0
+    MOV R5, #1
+    VMOV S4, R5
+    VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
     PUSH {R1}
 _pow_start:
-    VMOV S4, #1
     CMP R5, R6
     BLT _find_pow
     BEQ _pow_finish
