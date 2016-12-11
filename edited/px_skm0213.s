@@ -108,8 +108,7 @@ _pow:
     MOV R5, #0
     PUSH {R1}
 _pow_start:
-    VMOV S4, S1
-
+    VMOV S4, #1
     CMP R5, R6
     BLT _find_pow
     BEQ _pow_finish
