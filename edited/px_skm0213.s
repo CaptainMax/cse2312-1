@@ -70,7 +70,7 @@ _invalid_char:
 _abs:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
-    VCVT.F32.S32 S1, S0     @ convert signed bit representation to single float
+@    VCVT.F32.S32 S1, S0     @ convert signed bit representation to single float
     VABS.F32 S2, S1         @ compute S2 = |S0|
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
