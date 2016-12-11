@@ -67,7 +67,7 @@ _invalid_char:
     BL printf               @ call printf, where R1 is the print argument
     POP {PC}
 
-_getint:
+_getInt:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
     LDR R0, =formatint_str  @ R0 contains address of format string
