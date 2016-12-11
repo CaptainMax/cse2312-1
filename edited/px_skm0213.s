@@ -113,7 +113,7 @@ _pow_finish:
 _inverse:
     PUSH {LR}
     MOV R0, #1
-    MOV R1, #1
+    MOV R1, R1
     VMOV S0, R0             @ move the numerator to floating point register
     VMOV S1, R1             @ move the denominator to floating point register
 
