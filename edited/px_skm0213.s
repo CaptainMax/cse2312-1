@@ -96,13 +96,13 @@ _square_root:
     POP {PC}
 
 _find_pow:
-    VMUL.F32 S4, S1, S2
+    VMUL.F32 S4, S1, S1
     MOV PC, LR
 _pow:
     PUSH {LR}
     BL  _getInt
-    VMOV S1, R0             @ move the numerator to floating point register
-    VMOV S2, R6             @ move the numerator to floating point register
+    VMOV S1, R6             @ move the numerator to floating point register
+    VMOV S2, R0             @ move the numerator to floating point register
     PUSH {R1}
 _pow_start:
     VMOV S4, S1
