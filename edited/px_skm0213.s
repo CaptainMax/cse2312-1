@@ -98,19 +98,19 @@ _square_root:
 _find_pow:
     PUSH {LR}
     VMUL.F32 S4, S1, S1
-    ADD R2, R2, #1
+    ADD R5, R5, #1
     POP {PC}
 _pow:
     PUSH {LR}
     BL  _getInt
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R0             @ move the numerator to floating point register
-    MOV R2, #0
+    MOV R5, #0
     PUSH {R1}
 _pow_start:
     VMOV S4, S1
 
-    CMP R2, R6
+    CMP R5, R6
     BLT _find_pow
     BEQ _pow_finish
     B _pow_start
