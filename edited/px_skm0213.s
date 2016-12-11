@@ -15,9 +15,7 @@ main:
     MOV R1, R4
     MOV R2, R5
     BL _check_char
-    VCVT.F64.F32 D4, S0     @ covert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
+
     B main
 
 _printf_result:
@@ -116,7 +114,6 @@ _pow_finish:
     VCVT.F64.F32 D4, S4     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    B main
     POP {PC}
 
 _inverse:
@@ -127,7 +124,9 @@ _inverse:
     VMOV S1, R1             @ move the denominator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
     VDIV.F32 S2, S0, S1     @ compute S2 = S0 / S1
-    VMOV S0, S2
+    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
+    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
+    BL  _printf_result      @ print the result
     POP {PC}
 
 _check_char:
