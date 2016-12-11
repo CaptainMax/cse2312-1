@@ -109,9 +109,9 @@ _pow:
     BL  _getInt
     VMOV S1, R4             @ move the numerator to floating point register
     MOV R1, R0             @ move the numerator to floating point register
-    MOV R5, #1
+    LDR R2, =val1           @ load variable address
+    VLDR S4, [R2]
     VMOV S4, R5
-    VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
     SUB R1, R1, #1
     PUSH {R1}
 _pow_start:
@@ -163,3 +163,4 @@ exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
 formatint_str:  .asciz      "%d"
 printf_str:     .ascii      "%f\n"
+val1:           .float      1.000
