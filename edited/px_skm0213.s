@@ -96,9 +96,10 @@ _square_root:
     POP {PC}
 
 _find_pow:
+    PUSH {LR}
     VMUL.F32 S4, S1, S1
     ADD R2, R2, #1
-    MOV PC, LR
+    POP {PC}
 _pow:
     PUSH {LR}
     BL  _getInt
