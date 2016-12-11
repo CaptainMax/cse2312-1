@@ -79,7 +79,6 @@ _abs:
 _square_root:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
-
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
@@ -91,7 +90,7 @@ _find_pow:
     MOV PC, LR
 _pow:
     PUSH {LR}
-    BL  _getFloat
+    BL  _getInt
     MOV R6, R0
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R1             @ move the numerator to floating point register
@@ -144,4 +143,5 @@ result_str:     .asciz      "%f\n"
 invalid_str:    .asciz      "Invalid char\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
+formatint_str:  .asciz      "%d"
 printf_str:     .ascii      "%f\n"
