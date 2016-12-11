@@ -62,9 +62,10 @@ _scanf:
     POP {PC}                @ return
 
 _invalid_char:
-    LDR R0,=result_str      @ string at label hello_str:
+    PUSH {LR}
+    LDR R0,=invalid_str      @ string at label hello_str:
     BL printf               @ call printf, where R1 is the print argument
-    MOV PC, R7
+    POP {PC}
 
 _abs:
     PUSH {LR}
@@ -143,6 +144,7 @@ _check_char:
 .data
 read_char:      .ascii      " "
 result_str:     .asciz      "%f\n"
+invalid_str     .asciz      "Invalid char\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
 printf_str:     .ascii      "%f\n"
