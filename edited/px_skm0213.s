@@ -125,7 +125,7 @@ _inverse:
     VMOV S0, R0             @ move the numerator to floating point register
     VMOV S1, R1             @ move the denominator to floating point register
 
-    VDIV.F32 S2, S0, S1     @ compute S2 = S0 * S1
+    VDIV.F32 S2, S0, S1     @ compute S2 = S0 / S1
 
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
