@@ -111,7 +111,6 @@ _pow:
     MOV R1, R0             @ move the numerator to floating point register
     LDR R2, =val1           @ load variable address
     VLDR S4, [R2]
-    VMOV S4, R5
     SUB R1, R1, #1
     PUSH {R1}
 _pow_start:
