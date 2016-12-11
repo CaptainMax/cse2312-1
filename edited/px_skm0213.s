@@ -112,7 +112,19 @@ _pow_finish:
     BL  _printf_result      @ print the result
     POP {PC}
 _inverse:
-    MOV PC, LR
+    PUSH {LR}
+    MOV R0, #1
+    VMOV S0, R0             @ move the numerator to floating point register
+    VMOV S1, R1             @ move the denominator to floating point register
+    VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
+    VCVT.F32.U32 S1, S1     @ convert unsigned bit representation to single float
+
+    VDIV.F32 S2, S0, S1     @ compute S2 = S0 * S1
+
+    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
+    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
+    BL  _printf_result      @ print the result
+    POP {LR}
 _check_char:
     PUSH {LR}
     MOV R1, R1
