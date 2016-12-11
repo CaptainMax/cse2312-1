@@ -16,14 +16,6 @@ main:
     MOV R2, R5
     BL _check_char
     B main
-
-_printf:
-    PUSH {LR}
-    LDR R0, =printf_str     @ R0 contains formatted string address
-    MOV R1, R1              @ R1 contains printf argument (redundant line)
-    BL printf               @ call printf
-    POP {PC}
-
 _printf_result:
     PUSH {LR}               @ push LR to stack
     LDR R0, =result_str     @ R0 contains formatted string address
@@ -63,7 +55,7 @@ _scanf:
 
 _invalid_char:
     PUSH {LR}
-    LDR R0,=invalid_str      @ string at label hello_str:
+    LDR R0,=invalid_str     @ string at label hello_str:
     BL printf               @ call printf, where R1 is the print argument
     POP {PC}
 
@@ -95,20 +87,18 @@ _square_root:
     BL  _printf_result      @ print the result
     POP {PC}
 _find_pow:
-    PUSH {LR}
     VMUL.F32 S4, S1, S1
-    ADD R5, R5, #1
+    ADD R1, R1, #1
     PUSH {R1}
-    MOV R1, R5
     LDR R0, =formatint_str
     BL _printf
     POP {R1}
-    POP {PC}
+    B _pow_start
 _pow:
     PUSH {LR}
     BL  _getInt
     VMOV S1, R4             @ move the numerator to floating point register
-    MOV R1, R0             @ move the numerator to floating point register
+    MOV R1, R0              @ move the numerator to floating point register
     LDR R2, =val1           @ load variable address
     VLDR S4, [R2]
     SUB R1, R1, #1
@@ -117,7 +107,6 @@ _pow_start:
     CMP R1, R0
     BLT _find_pow
     BEQ _pow_finish
-    B _pow_start
 _pow_finish:
     POP {R1}
     VCVT.F64.F32 D4, S4     @ covert the result to double precision for printing
@@ -141,14 +130,13 @@ _inverse:
 
 _check_char:
     PUSH {LR}
-    MOV R1, R1
-    CMP R5, #'a'
+    CMP R2, #'a'
     BEQ _abs
-    CMP R5, #'s'
+    CMP R2, #'s'
     BEQ _square_root
-    CMP R5, #'p'
+    CMP R2, #'p'
     BEQ _pow
-    CMP R5, #'i'
+    CMP R2, #'i'
     BEQ _inverse
     BNE _invalid_char
     POP {PC}
