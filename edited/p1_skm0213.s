@@ -130,21 +130,3 @@ val_str     :      .ascii      "%d\n"
 result_str  :      .asciz      "%d\n"
 exit_str    :      .ascii      "Terminating program.\n"
 input       :      .asciz      "%d"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
