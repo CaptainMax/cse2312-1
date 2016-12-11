@@ -144,7 +144,7 @@ _check_char:
 .data
 read_char:      .ascii      " "
 result_str:     .asciz      "%f\n"
-invalid_str     .asciz      "Invalid char\n"
+invalid_str:    .asciz      "Invalid char\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
 printf_str:     .ascii      "%f\n"
