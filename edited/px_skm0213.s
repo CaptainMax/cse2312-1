@@ -104,10 +104,11 @@ _pow:
     BL  _getInt
     VMOV S1, R6             @ move the numerator to floating point register
     VMOV S2, R0             @ move the numerator to floating point register
+    MOV R2, #0
     PUSH {R1}
 _pow_start:
     VMOV S4, S1
-    MOV R2, #0
+
     CMP R2, R6
     BLT _find_pow
     BEQ _pow_finish
