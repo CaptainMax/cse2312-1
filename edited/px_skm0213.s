@@ -99,9 +99,11 @@ _find_pow:
     PUSH {LR}
     VMUL.F32 S4, S1, S1
     ADD R5, R5, #1
+PUSH {R1}
     MOV R1, R5
     LDR R0, =formatint_str
     BL _printf
+POP {R1}
     POP {PC}
 _pow:
     PUSH {LR}
