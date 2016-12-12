@@ -118,8 +118,9 @@ _pow_finish:
 
 _inverse:
     PUSH {LR}
-    MOV R0, #1
-    MOV R1, R1
+    MOV R2, R1
+    LDR R1, =val1
+    
     VMOV S0, R0             @ move the numerator to floating point register
     VMOV S1, R1             @ move the denominator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
