@@ -170,7 +170,8 @@ _check_char:
 
 .data
 read_char:      .ascii      " "
-result_str:     .asciz      "%.6g\n"
+@%.7g is to print the floating point number without trailing zeros
+result_str:     .asciz      "%.7g\n"
 invalid_str:    .asciz      "Invalid input\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
