@@ -47,13 +47,14 @@ main:
     MOV R1, R4              @ Prepare the input argument 1 for passing to _check_char
     MOV R2, R5              @ Prepare the input argument 2 for passing to _check_char
     BL _check_char          @ Go to _check_char
-    VMOV D1, D0
+    VMOV S1, S0
     BL _printf
     BL  _printf_result      @ print the result
     B main
 
-_printf_prep:
+_printf:
     PUSH {LR}
+    VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
     VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     BL _printf_result
     POP {PC}
@@ -119,16 +120,15 @@ _abs:
     MOV R1, R1              @ redundant Mov
     VMOV S0, R1             @ move the value to floating point register
     VABS.F32 S2, S0         @ compute S2 = |S0|
-    VCVT.F64.F32 D0, S2     @ covert the result to double precision for printing
+    VMOV S0, S2
     POP {PC}
 
 _square_root:
     PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
-    VCVT.F64.F32 D0, S2     @ convert the result to double precision for printing
+    VMOV S0, S2
     POP {PC}
-
 
 _find_pow:
     VMUL.F32 S4, S4, S1     @ multiply s4 by itself.
@@ -149,7 +149,7 @@ _pow_start:
     BLT _find_pow           @ if less than, then multiply by float value
     BEQ _pow_finish         @ otherwise finish
 _pow_finish:
-    VCVT.F64.F32 D0, S4     @ convert the result to double precision for printing
+    VMOV S0, S4
     POP {PC}
 
 _inverse:
@@ -159,7 +159,6 @@ _inverse:
     VMOV S1, R1             @ move the denominator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
     VDIV.F32 S2, S0, S1     @ compute S2 = S0 / S1
-    VCVT.F64.F32 D0, S2     @ covert the result to double precision for printing
     POP {PC}
 
 
