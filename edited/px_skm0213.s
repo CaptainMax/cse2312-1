@@ -105,7 +105,7 @@ _pow:
     VMOV S4, R2
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
 _pow_start:
-    CMP R1, R0
+    CMP R2, R1
     BLT _find_pow
     BEQ _pow_finish
 _pow_finish:
