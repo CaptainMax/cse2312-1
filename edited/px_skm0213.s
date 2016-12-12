@@ -97,7 +97,7 @@ _pow:
     BL  _getInt
     VMOV S1, R4             @ move the numerator to floating point register
     MOV R1, R0              @ move the numerator to floating point register
-    MOV R2, #1              @ load variable address
+    MOV R2, #0              @ load variable address
     VMOV S4, R2
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
 _pow_start:
