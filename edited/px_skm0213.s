@@ -90,11 +90,7 @@ _square_root:
     POP {PC}
 _find_pow:
     VMUL.F32 S4, S1, S1
-    ADD R1, R1, #1
-    PUSH {R1}
-    LDR R0, =formatint_str
-    BL printf
-    POP {R1}
+    ADD R2, R2, #1
     B _pow_start
 _pow:
     PUSH {LR}
