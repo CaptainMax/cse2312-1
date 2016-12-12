@@ -46,16 +46,20 @@ main:
     MOV R5, R0              @ store recieved value in R5
     MOV R1, R4              @ Prepare the input argument 1 for passing to _check_char
     MOV R2, R5              @ Prepare the input argument 2 for passing to _check_char
-    B _check_char           @ Go to _check_char
+    BL _check_char          @ Go to _check_char
+    BL _printf_prep
+    BL  _printf_result      @ print the result
+    B main
 
-
+_printf_prep:
+    PUSH {LR}
+    VMOV R1, R2, D0         @ split the double VFP register into two ARM registers
+    POP {PC}
 _printf_result:
-    PUSH {R1}               @ extra push to ensure that printf calls correctly (but doesn't work)
+    PUSH {LR}
     LDR R0, =result_str     @ R0 contains formatted string address
     BL printf               @ call printf
-    POP {R1}                @ extra pop to ensure that printf calls correctly (but doesn't work)
-    B main                  @ branch directly to main function without return
-
+    POP {PC}
 
 _getFloat:
     PUSH {LR}               @ store LR since scanf call overwrites
@@ -92,10 +96,10 @@ _scanf:
 
 
 _invalid_char:
+    PUSH {LR}
     LDR R0,=invalid_str     @ string at label hello_str:
     BL printf               @ call printf, where R1 is the print argument
-    B main
-
+    POP {LR}
 
 _getInt:
     PUSH {LR}               @ store LR since scanf call overwrites
@@ -108,19 +112,19 @@ _getInt:
     POP {PC}                @ return
 
 _abs:
+    PUSH {LR}
     MOV R1, R1              @ redundant Mov
     VMOV S0, R1             @ move the value to floating point register
     VABS.F32 S2, S0         @ compute S2 = |S0|
-    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
+    VCVT.F64.F32 D0, S2     @ covert the result to double precision for printing
+    POP {PC}
 
 _square_root:
+    PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
-    VCVT.F64.F32 D4, S2     @ convert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
+    VCVT.F64.F32 D0, S2     @ convert the result to double precision for printing
+    POP {PC}
 
 
 _find_pow:
@@ -128,6 +132,7 @@ _find_pow:
     ADD R3, R3, #1          @ increase the while loop counter by 1
     B _pow_start            @ branch to _pow_start
 _pow:
+    PUSH {LR}
     MOV R1, R1              @ getting the user float value input
     BL  _getInt             @ getting the user integer input for the pow function
     VMOV S1, R4             @ moving user float value input to S1
@@ -141,22 +146,22 @@ _pow_start:
     BLT _find_pow           @ if less than, then multiply by float value
     BEQ _pow_finish         @ otherwise finish
 _pow_finish:
-    VCVT.F64.F32 D4, S4     @ convert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
-
+    VCVT.F64.F32 D0, S4     @ convert the result to double precision for printing
+    POP {PC}
 
 _inverse:
+    PUSH {LR}
     MOV R0, #1              @ initialize numerator
     VMOV S0, R0             @ move the numerator to floating point register
     VMOV S1, R1             @ move the denominator to floating point register
     VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
     VDIV.F32 S2, S0, S1     @ compute S2 = S0 / S1
-    VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
-    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-    BL  _printf_result      @ print the result
+    VCVT.F64.F32 D0, S2     @ covert the result to double precision for printing
+    POP {PC}
+
 
 _check_char:
+    PUSH {LR}
     CMP R2, #'a'            @ check if char value is a
     BEQ _abs                @ find absolute value if equal
     CMP R2, #'s'            @ check if char value is s
@@ -166,6 +171,7 @@ _check_char:
     CMP R2, #'i'            @ check if char value is i
     BEQ _inverse            @ find inverse value if equal
     BNE _invalid_char       @ if an invalid character is entered
+    POP {PC}
 
 
 .data
