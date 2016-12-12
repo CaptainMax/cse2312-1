@@ -16,7 +16,7 @@ main:
     MOV R2, R5
     BL _check_char
 
-    BL main
+    B main
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
@@ -103,7 +103,7 @@ _pow:
     MOV R1, R0              @ move the numerator to floating point register
     LDR R2, =val1           @ load variable address
     VLDR S4, [R2]
-    SUB R1, R1, #1
+    ADD R1, R1, #-1
     PUSH {R1}
 _pow_start:
     CMP R1, R0
