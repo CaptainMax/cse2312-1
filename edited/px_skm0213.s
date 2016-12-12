@@ -89,7 +89,7 @@ _square_root:
     BL  _printf_result      @ print the result
     POP {PC}
 _find_pow:
-    VMUL.F32 S4, S1, S1
+    VMUL.F32 S4, S4, S1
     ADD R2, R2, #1
     B _pow_start
 _pow:
