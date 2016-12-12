@@ -16,7 +16,7 @@ main:
     MOV R2, R5
     BL _check_char
 
-    B main
+    BL main
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
