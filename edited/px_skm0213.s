@@ -171,7 +171,7 @@ _check_char:
 
 .data
 read_char:      .ascii      " "
-result_str:     .asciz      "%f\n"
+result_str:     .asciz      "%0.0f\n"
 invalid_str:    .asciz      "Invalid char\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
