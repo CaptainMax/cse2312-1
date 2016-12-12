@@ -90,18 +90,19 @@ _square_root:
     POP {PC}
 _find_pow:
     VMUL.F32 S4, S4, S1
-    ADD R2, R2, #1
+    ADD R3, R3, #1
     B _pow_start
 _pow:
     PUSH {LR}
     BL  _getInt
-    VMOV S1, R4             @ move the numerator to floating point register
-    MOV R1, R0              @ move the numerator to floating point register
-    MOV R2, #0              @ load variable address
+    VMOV S1, R4
+    MOV R1, R0
+    MOV R2, #1              @ load variable address
+    MOV R3, #1
     VMOV S4, R2
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
 _pow_start:
-    CMP R2, R1
+    CMP R3, R1
     BLT _find_pow
     BEQ _pow_finish
 _pow_finish:
