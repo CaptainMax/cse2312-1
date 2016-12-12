@@ -92,10 +92,9 @@ _scanf:
 
 
 _invalid_char:
-    PUSH {LR}
     LDR R0,=invalid_str     @ string at label hello_str:
     BL printf               @ call printf, where R1 is the print argument
-    POP {PC}
+    B main
 
 
 _getInt:
@@ -172,7 +171,7 @@ _check_char:
 .data
 read_char:      .ascii      " "
 result_str:     .asciz      "%.6g\n"
-invalid_str:    .asciz      "Invalid char\n"
+invalid_str:    .asciz      "Invalid input\n"
 exit_str:       .ascii      "Terminating program.\n"
 format_str:     .asciz      "%f"
 formatint_str:  .asciz      "%d"
