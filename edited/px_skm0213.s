@@ -103,13 +103,11 @@ _pow:
     MOV R1, R0              @ move the numerator to floating point register
     LDR R2, =val1           @ load variable address
     VLDR S4, [R2]
-    PUSH {R1}
 _pow_start:
     CMP R1, R0
     BLT _find_pow
     BEQ _pow_finish
 _pow_finish:
-    POP {R1}
     VCVT.F64.F32 D4, S4     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
