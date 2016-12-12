@@ -14,17 +14,15 @@ main:
     MOV R5, R0
     MOV R1, R4
     MOV R2, R5
-    BL _check_char
-    B main
+    B _check_char
 
 
 _printf_result:
-    PUSH {LR}               @ push LR to stack
     PUSH {R1}
     LDR R0, =result_str     @ R0 contains formatted string address
     BL printf               @ call printf
     POP {R1}
-    POP {PC}                @ pop LR from stack and return
+    B main
 
 
 _getFloat:
@@ -79,23 +77,19 @@ _getInt:
     POP {PC}                @ return
 
 _abs:
-    PUSH {LR}
     MOV R1, R1
     VMOV S0, R1             @ move the numerator to floating point register
     VABS.F32 S2, S0         @ compute S2 = |S0|
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    POP {PC}
 
 _square_root:
-    PUSH {LR}
     VMOV S0, R1             @ move the numerator to floating point register
     VSQRT.F32 S2, S0        @ compute S2 = sqrt(S0)
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    POP {PC}
 
 
 _find_pow:
@@ -103,7 +97,6 @@ _find_pow:
     ADD R3, R3, #1
     B _pow_start
 _pow:
-    PUSH {LR}
     MOV R1, R1
     BL  _getInt
     VMOV S1, R4
@@ -120,11 +113,9 @@ _pow_finish:
     VCVT.F64.F32 D4, S4     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    POP {PC}
 
 
 _inverse:
-    PUSH {LR}
     MOV R0, #1
     MOV R1, R1
     VMOV S0, R0             @ move the numerator to floating point register
@@ -134,11 +125,10 @@ _inverse:
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
-    POP {PC}
+
 
 
 _check_char:
-    PUSH {LR}
     CMP R2, #'a'
     BEQ _abs
     CMP R2, #'s'
@@ -148,7 +138,6 @@ _check_char:
     CMP R2, #'i'
     BEQ _inverse
     BNE _invalid_char
-    POP {PC}
 
 
 .data
