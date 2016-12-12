@@ -16,13 +16,13 @@ main:
     MOV R2, R5
     BL _check_char
 
-    B main
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
     LDR R0, =result_str     @ R0 contains formatted string address
     BL printf               @ call printf
     POP {PC}                @ pop LR from stack and return
+
 
 _getFloat:
     PUSH {LR}               @ store LR since scanf call overwrites
@@ -33,6 +33,7 @@ _getFloat:
     LDR R0, [SP]            @ load value at SP into R0
     ADD SP, SP, #4          @ restore the stack pointer
     POP {PC}                @ return
+
 
 _getchar:
     PUSH {LR}
@@ -45,6 +46,7 @@ _getchar:
     AND R0, #0xFF           @ mask out all but the lowest 8 bits
     POP {PC}
 
+
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
@@ -55,11 +57,13 @@ _scanf:
     ADD SP, SP, #4          @ restore the stack pointer
     POP {PC}                @ return
 
+
 _invalid_char:
     PUSH {LR}
     LDR R0,=invalid_str     @ string at label hello_str:
     BL printf               @ call printf, where R1 is the print argument
     POP {PC}
+
 
 _getInt:
     PUSH {LR}               @ store LR since scanf call overwrites
@@ -88,6 +92,8 @@ _square_root:
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL  _printf_result      @ print the result
     POP {PC}
+
+
 _find_pow:
     VMUL.F32 S4, S4, S1
     ADD R3, R3, #1
@@ -111,6 +117,7 @@ _pow_finish:
     BL  _printf_result      @ print the result
     POP {PC}
 
+
 _inverse:
     PUSH {LR}
     MOV R0, #1
@@ -124,8 +131,8 @@ _inverse:
     BL  _printf_result      @ print the result
     POP {PC}
 
+
 _check_char:
-    PUSH {LR}
     CMP R2, #'a'
     BEQ _abs
     CMP R2, #'s'
@@ -135,7 +142,7 @@ _check_char:
     CMP R2, #'i'
     BEQ _inverse
     BNE _invalid_char
-    POP {PC}
+    B main
 
 
 .data
