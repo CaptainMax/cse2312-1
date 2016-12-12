@@ -123,7 +123,7 @@ _inverse:
 
     VMOV S1, R1             @ move the numerator to floating point register
     VMOV S2, R2             @ move the denominator to floating point register
-    VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
+    VCVT.F32.U32 S2, S2     @ convert unsigned bit representation to single float
     VDIV.F32 S3, S1, S2     @ compute S3 = S1 / S2
     VCVT.F64.F32 D4, S3     @ covert the result to double precision for printing
     VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
