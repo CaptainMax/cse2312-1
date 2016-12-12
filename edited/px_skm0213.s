@@ -20,8 +20,10 @@ main:
 
 _printf_result:
     PUSH {LR}               @ push LR to stack
+    PUSH {R1}
     LDR R0, =result_str     @ R0 contains formatted string address
     BL printf               @ call printf
+    POP {R1}
     POP {PC}                @ pop LR from stack and return
 
 
