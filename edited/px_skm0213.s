@@ -47,15 +47,15 @@ main:
     MOV R1, R4              @ Prepare the input argument 1 for passing to _check_char
     MOV R2, R5              @ Prepare the input argument 2 for passing to _check_char
     BL _check_char          @ Go to _check_char
-    VMOV S1, S0
+    VMOV S1, R0
     BL _printf
     BL  _printf_result      @ print the result
     B main
 
 _printf:
     PUSH {LR}
-    VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
-    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+    VCVT.F64.F32 D4, S1     @ covert the result to double precision for printing
+    VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
     BL _printf_result
     POP {PC}
 
@@ -120,7 +120,7 @@ _abs:
     MOV R1, R1              @ redundant Mov
     VMOV S0, R1             @ move the value to floating point register
     VABS.F32 S2, S0         @ compute S2 = |S0|
-    VMOV S0, S2
+    VMOV R0, S2
     POP {PC}
 
 _square_root:
