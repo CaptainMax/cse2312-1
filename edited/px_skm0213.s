@@ -15,6 +15,7 @@ main:
     MOV R1, R4
     MOV R2, R5
     BL _check_char
+    B main
 
 
 _printf_result:
@@ -77,6 +78,7 @@ _getInt:
 
 _abs:
     PUSH {LR}
+    MOV R1, R1
     VMOV S0, R1             @ move the numerator to floating point register
     VABS.F32 S2, S0         @ compute S2 = |S0|
     VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
@@ -100,6 +102,7 @@ _find_pow:
     B _pow_start
 _pow:
     PUSH {LR}
+    MOV R1, R1
     BL  _getInt
     VMOV S1, R4
     MOV R1, R0
@@ -133,6 +136,7 @@ _inverse:
 
 
 _check_char:
+    PUSH {LR}
     CMP R2, #'a'
     BEQ _abs
     CMP R2, #'s'
@@ -142,7 +146,7 @@ _check_char:
     CMP R2, #'i'
     BEQ _inverse
     BNE _invalid_char
-    B main
+    POP {PC}
 
 
 .data
