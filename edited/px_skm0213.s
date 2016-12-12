@@ -98,7 +98,7 @@ _pow:
     VMOV S1, R4
     MOV R1, R0
     MOV R2, #1              @ load variable address
-    MOV R3, #1
+    MOV R3, #0
     VMOV S4, R2
     VCVT.F32.U32 S4, S4     @ convert unsigned bit representation to single float
 _pow_start:
