@@ -103,7 +103,6 @@ _pow:
     MOV R1, R0              @ move the numerator to floating point register
     LDR R2, =val1           @ load variable address
     VLDR S4, [R2]
-    ADD R0, R0, #-1
     PUSH {R1}
 _pow_start:
     CMP R1, R0
