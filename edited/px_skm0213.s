@@ -47,13 +47,14 @@ main:
     MOV R1, R4              @ Prepare the input argument 1 for passing to _check_char
     MOV R2, R5              @ Prepare the input argument 2 for passing to _check_char
     BL _check_char          @ Go to _check_char
+    VMOV D1, D0
     BL _printf
     BL  _printf_result      @ print the result
     B main
 
 _printf_prep:
     PUSH {LR}
-    VMOV R1, R2, D0         @ split the double VFP register into two ARM registers
+    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     BL _printf_result
     POP {PC}
 
